@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：名称空间；写接口的全类名，相当于告诉MyBatis这个配置文件是实现哪个接口的；  -->
+<mapper namespace="com.worker0902.mapper.WorkerMapper" >
+<resultMap id="workerMap" type="worker" autoMapping="true">
+    <id column="wid" property="wid"></id>
+    <association property="department" javaType="department" autoMapping="true">
+        <id column="deptid" property="deptid"></id>
+    </association>
+</resultMap>
+
+<!--    public List<Worker> getAllWorkerByPage(@Param("index")int startIndex, @Param("count")int count);-->
+    <select id="getAllWorkerByPage" resultMap="workerMap">
+        select w.*,d.* from worker w inner join department d on w.deptid=d.deptid
+        limit #{index},#{count}
+    </select>
+</mapper>
